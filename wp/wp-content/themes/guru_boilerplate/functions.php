@@ -495,8 +495,6 @@ function boilerplate_posted_in() {
 endif;
 
 /*	Begin Boilerplate */
-	// Add Admin
-		require_once(TEMPLATEPATH . '/boilerplate-admin/admin-menu.php');
 
 	// remove version info from head and feeds (http://digwp.com/2009/07/remove-wordpress-version-number/)
 		function boilerplate_complete_version_removal() {
@@ -534,6 +532,37 @@ if ( function_exists( 'add_theme_support' ) ) {
 
 
 /** BEGIN GuRu Theme Specific Functions **/
+
+global $prefix;
+$prefix = 'dolphin_';
+
+/** WE LOAD IN OUR MODERNIZR AND JQUERY SCRIPTS OURSELVES
+ *		Modernizr.load in header.php controls all the asynchronous loading
+ */
+function guru_deregister_scripts(){
+	
+	if ( !is_admin() ) {
+		wp_deregister_script( 'ieshiv' ); // get rid of IEShiv if it somehow got called too (IEShiv is included in Modernizr)
+		wp_deregister_script( 'modernizr' ); // get rid of any native Modernizr
+		wp_deregister_script( 'jquery' ); // get rid of WP's jQuery
+		
+		/**
+		 *  we RARELY use commenting on our wordpress sites.
+		 *  add these lines to keep the associated javascript from loading
+		 *  and to remove the comments feed link from the <head>
+		 **/
+		wp_dequeue_script('comment-reply');
+		wp_deregister_script('comment-reply');
+	}
+}
+add_action('init', 'guru_deregister_scripts');
+
+remove_action( 'wp_head', 'feed_links', 2 );
+add_action('wp_head', 'addBackPostFeed');
+function addBackPostFeed() {
+    echo '<link rel="alternate" type="application/rss+xml" title="RSS 2.0 Feed"    href="'.get_bloginfo('rss2_url').'" />';
+}
+
 
 /*
 function flag_content_more_link($link) { 
@@ -573,6 +602,19 @@ function nav_menu_first_last( $items ) {
 add_filter( 'wp_nav_menu_items', 'nav_menu_first_last' );
 
 
+//to add slug of item to classes for each nav menu item
+function slug_nav_class( $classes, $item ){
+	//$slug = get_page( $item->object_id )->post_name;
+		
+	$classes[] = get_page( $item->object_id )->post_name;
+	
+	//$slug = null;
+	
+	return $classes;
+}
+add_filter( 'nav_menu_css_class', 'slug_nav_class', 10, 2 ); // 10 is priority, 2 is the accepted number of args to pass to the function.  opens up $item in this case.
+
+
 function content($limit = 55) {
   $content = explode(' ', strip_tags(get_the_content()), $limit);
   if (count($content)>=$limit) {
@@ -609,6 +651,17 @@ if( class_exists( 'MetaBoxTemplate' )){
 				
 }
 
+//used for single template next and previous navigation
+function guru_post_nav(){ 
+  ?>
+    <nav id="nav-below" class="navigation">
+    	<div class="nav-previous"><?php previous_post_link( '%link', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'boilerplate' ) . '</span> %title' ); ?></div>
+    	<div class="nav-next"><?php next_post_link( '%link', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'boilerplate' ) . '</span>' ); ?></div>
+    	<div class="clearfix"></div>
+    </nav>
+  <?php 
+}
+
 // only install post type if class present
 //if( class_exists( 'NewPostType' )){
 //
@@ -637,6 +690,64 @@ if( class_exists( 'MetaBoxTemplate' )){
 //	));
 //}
 
+
+
+/*
+	//THIS ENABLES PAGINATION ON THE CUSTOM TAXONOMY TEMPLATES
+	//http://wordpress.org/support/topic/custom-types-category-pagination-404
+	//changed his is_category() to is_tax()
+	add_action( 'parse_query','changept' );
+	function changept() {
+		global $prefix;
+		if( is_tax() && !is_admin() ){
+			set_query_var( 'post_type', array( 'post', $prefix.'attraction', $prefix.'event' ) );
+		}
+		return;
+	}
+*/
+
+  //WP Pages
+  function guru_pagination($pages = '', $range = 3){ 
+    $showitems = ($range * 2)+1;
+    global $paged; 
+    
+    if(empty($paged)) 
+      $paged = 1;
+    
+    if($pages == '') {
+      global $wp_query;
+      $pages = $wp_query->max_num_pages; 
+      if(!$pages){ 
+        $pages = 1; 
+      } 
+    }
+    if(1 != $pages){ 
+      echo "<div class=\"pagination\"><span class=\"text\">Page ".$paged." of ".$pages."</span>";
+      
+      if($paged > 2 && $paged > $range+1 && $showitems < $pages) 
+        echo "<a href='".get_pagenum_link(1)."' class=\"first\">&laquo; First</a>";
+   
+      if($paged > 1 && $showitems < $pages) 
+        echo "<a href='".get_pagenum_link($paged - 1)."' class=\"prev\">&lsaquo; Previous</a>";
+   
+      for ($i=1; $i <= $pages; $i++){ 
+        if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )){ 
+          echo ($paged == $i) ? 
+            "<span class=\"current\">".$i."</span>":
+            "<a href='".get_pagenum_link($i)."' class=\"inactive\">".$i."</a>";
+        } 
+      } 
+      if ($paged < $pages && $showitems < $pages) 
+        echo "<a href=\"".get_pagenum_link($paged + 1)."\" class=\"next\">Next &rsaquo;</a>";
+   
+      if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) 
+        echo "<a href='".get_pagenum_link($pages)."' class=\"last\">Last &raquo;</a>";
+      
+      echo "</div>"; 
+    }
+    //always clearfix
+    echo '<div class="clearfix"></div>';
+  }
 
 
 

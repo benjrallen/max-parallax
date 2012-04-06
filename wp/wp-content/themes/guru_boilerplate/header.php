@@ -39,6 +39,22 @@
 			Guru.wpVersion = '<?php echo trim(get_bloginfo("version")); ?>';
 			Guru.postID = '<?php echo get_the_ID(); ?>';
 		</script>
+
+		<script src="<?php bloginfo('template_directory'); ?>/js/modernizr.js"></script>
+
+		<script type="text/javascript">
+			Modernizr.load([
+				{ load : ['//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'],
+				    complete: function () { if ( !window.jQuery ){ Modernizr.load(Guru.TemplateUrl+'/js/jquery.js'); } }
+				},
+				{ test: window.JSON, nope: Guru.TemplateUrl+'/js/json2.js' },
+				/* plugins.js & common.js fordevelopment */
+				{ load : Guru.TemplateUrl+'/js/plugins.js' },
+				{ load : Guru.TemplateUrl+'/js/common.js' }
+				/* concatenate and optimize seperate script files for deployment using google closure compiler (compiler.jar) in js folder */
+				//{ load : Guru.TemplateUrl+'/js/theme.js' }
+			]);
+		</script>
 		
 <?php
 		/* We add some JavaScript to pages with the comment form
@@ -54,17 +70,6 @@
 		 */
 		wp_head();		
 ?>
-		<script type="text/javascript">
-			Modernizr.load([
-				{ load : ['//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'] },
-				{ test: window.JSON, nope: Guru.TemplateUrl+'/js/json2.js' },
-				/* plugins.js & common.js fordevelopment */
-				{ load : Guru.TemplateUrl+'/js/plugins.js' },
-				{ load : Guru.TemplateUrl+'/js/common.js' }
-				/* concatenate and optimize seperate script files for deployment using google closure compiler (compiler.jar) in js folder */
-				//{ load : Guru.TemplateUrl+'/js/theme.js' }
-			]);
-		</script>
 	</head>
 	<body <?php body_class(); ?>>
 		<header id="header" class="wrap" role="banner">
