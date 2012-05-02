@@ -1,0 +1,214 @@
+#contact{
+
+	background: darken( $base-white, 15% );	
+	height: auto;
+	
+	color: $base-color;
+	@include padding-trailer();
+	
+
+	& .bg-image{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+		
+		//@include single-transition( all, 0.2s );
+		//background: url('../images/texture-white-60.jpg') no-repeat center 0;
+		background: url('../images/texture-white-60.jpg') repeat-x center 0;
+		
+		@include opacity( 0.35 );
+
+
+	}
+
+
+	& a{
+		color: $base-color;
+		
+		&:hover{
+			color: $base-pink;
+		}
+	}
+	
+	& #gMap{
+		position: relative;
+		z-index: 2;
+		
+		height: 326px;
+		background: $base-color;
+		width: 100%;
+
+		@include box-shadow( 
+			lighten($base-color, 10% ) 0 6px 12px -3px
+		);
+
+	}
+	
+	& .contact-left, & #contact-form{
+		@include inline-block;
+		vertical-align: middle;
+	}
+	
+	& .contact-left{
+		width: 55%;
+	}
+	& #contact-form{
+		width: 40%;
+	}
+	
+	& .page-title{
+		@include adjust-font-size-to( 52px );
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+	
+	& .locationList{
+		@include adjust-font-size-to( 34px );
+		letter-spacing: 1;
+		
+		& span, & a{
+			display: block;
+			
+			&.longname{
+				display: none;
+			}
+		}
+	}
+	
+	& .contact-sm{
+		
+		& .sm{
+			
+			& a{
+				padding-left: 0;
+				border: none;
+				
+				&.fb{
+					& .icon{
+						background-position: -1500px 0px;
+					}
+				}
+				&.tw{
+					& .icon{
+						background-position: -1525px 0px;
+					}	
+				}
+			}
+		}
+	}
+}
+
+.mapInfoDom{
+	@include adjust-font-size-to( 20px );
+	& a, & span{
+		display: block;
+		
+		&.directionsLink{
+			text-align: right;
+		}
+	}
+}
+
+$contact-color: lighten( $base-color, 10% );
+#contact-form{
+	@include padding-leader(0.5);
+	color: $contact-color;
+	position: relative;
+	
+	& label{
+		display: block;
+		@include adjust-font-size-to( 34px, 2 );
+		@include padding-leader(0.25);
+	}
+	
+	$inp-size: 18px;
+	$inp-height: 28px;
+	$inp-padd: 9px;
+	& input, & textarea{
+		font-size: $inp-size;
+		padding-top: $inp-padd;
+		padding-bottom: $inp-padd;
+		border: none;
+		width: 94%;
+		padding-left: 3%;
+		padding-right: 3%;
+	}
+	& input{
+		height: $inp-height;
+		
+		&[type="submit"]{
+			height: auto;
+			@include float-right;
+			width: auto;
+			@include league-gothic;
+			@include adjust-font-size-to( 31px );
+			letter-spacing: 1px;
+			padding-left: 0.5em;
+			padding-right: 0.5em;
+			background: $contact-color;
+			color: darken( $base-white, 10% );
+			
+			&:hover{
+				background: darken( $contact-color, 10% );
+			}
+			&:active{
+				background: darken( $contact-color, 20% );
+			}
+		}
+	}
+	& textarea{
+		height: 3 * $inp-height;
+	}
+	
+	& p{
+		display: block;
+		position: relative;
+		
+		& span{
+			display: block;
+		}
+		
+		& span{
+			position: relative;
+			
+			& .wpcf7-not-valid-tip{
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 90%;
+				padding-left: 5%;
+				padding-right: 5%;
+				padding-top: $inp-padd;
+				padding-bottom: $inp-padd;
+				height: $inp-height;
+				line-height: $inp-height;
+				font-size: 20px;
+				
+				border: 1px solid $base-pink;
+				background: lighten( $base-pink, 30% );
+			}
+		}
+	}
+	
+	& div.wpcf7-response-output{
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 60%;
+		margin: 0;
+		padding-top: $inp-padd;
+		padding-bottom: $inp-padd;
+		line-height: $inp-height;
+		font-size: $inp-size;
+		background: lighten( $base-yellow, 40% );
+		border: 2px solid $base-yellow;
+	}
+	
+	& div.wpcf7-mail-sent-ok{
+		background: lighten( $base-blue, 30% );
+		border: 2px solid $base-blue;	
+	}
+}

@@ -1,0 +1,85 @@
+
+.fixedNav{
+	
+	& body{
+		//padding-top: $fixed-menu-height;
+	}
+	
+	& nav{
+		&#fixed-nav{
+			position: fixed;
+			top: 0;
+		}
+	}
+}
+
+nav{
+	
+	@include league-gothic;
+	@include text-shadow( #333 1px 1px 1px );
+	//font-weight: 600;
+	@include adjust-font-size-to( 28px );
+	letter-spacing: 2px;
+	text-align: left;
+
+	&#fixed-nav{
+		height: $fixed-menu-height;
+		width: 100%;
+
+		@include box-shadow( #000 0 -3px 24px -6px );
+		
+		background: $base-color;
+		
+		position: absolute;
+		z-index: 2000;
+		top: $home-height;
+		left: 0;
+		
+		& .wrap{
+			height: 100%;
+		}
+		& .line, & .menu{
+			@include inline-block;
+			vertical-align: baseline;
+		}
+		
+		& h2.logo{
+			@include float-left;
+			height: 100%;
+			
+			& .line{
+				vertical-align: middle;
+			}
+			
+			& a{
+				@include inline-block;
+				vertical-align: middle;
+				@include sprite-not-3d;
+				width: 123px;
+				height: 58px;
+				background-position: -500px 0;
+				text-indent: -9999em;
+			}
+		}
+		
+		& .menu{
+			
+			& .menu-item{
+				@include float-left;
+				display: block;
+				
+				&:hover, &.active{
+					& a{
+						color: $base-pink;
+					}
+				}
+				& a{
+					display: block;
+					padding-left: 1em;
+					@include padding-trailer( 0.5 );
+				}
+			}
+		}
+	
+	}
+}

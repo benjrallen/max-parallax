@@ -1,0 +1,95 @@
+#menu-3d{
+	position: relative;
+	z-index: 1000;
+	
+	& .wrap{
+		position: relative;
+		
+		& h2{
+			width: 449px;
+			height: $height-3d-menu;
+			position: absolute;
+			top: -1 * floor( $height-3d-menu * 3 / 4 );
+			left: 0;
+			@include main-sprite;
+			background-position: -500px -100px;
+			text-indent: -9999em;
+		}
+	}
+}
+
+#menu{
+	
+	height: auto;
+
+	padding-top: floor( $height-3d-menu * 1 / 4 );
+
+	border-top: 1px lighten($base-color, 20% );
+
+	z-index: 2;
+
+	@include box-shadow( 
+		lighten($base-color, 10% ) 0 -6px 12px -3px,
+		lighten($base-color, 0% ) 0 6px 12px -3px
+	);
+
+	& .bg-image{
+		background: url('../images/bg-stripe-on-black.png') repeat center 0;
+		
+		@include opacity( 1 )
+
+	}
+
+	
+	& #menu-wrap{
+		@include padding-leader();
+		
+		& .cat{
+			
+			& .menu-cat{
+				@include adjust-font-size-to( 54px, 2 );
+				@include padding-trailer(0.25);
+				@include padding-leader(0.25);
+			}
+			
+			& .item{
+				$padd: 60px;
+				width: 50%;
+				@include float-left;
+				@include padding-trailer(1 );
+				
+				& .name{
+					text-align: right;
+					
+					padding-right: $padd;
+				}
+				& .title{
+					@include float-left;
+					@include adjust-font-size-to( 26px, 1.5 );
+					letter-spacing: 1px;
+				}
+				& .price{
+					@include adjust-font-size-to(16px, 1.25 );
+					@include raleway;
+					//font-weight: bold;
+				}
+				& .content{
+					@include open-sans;
+					@include adjust-font-size-to(14px );
+					padding-right: $padd;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+}
+
+
+/*
+<div id="menu-3d">
+	<div class="wrap">
+		<h2 class="page-title"><?php the_title(); ?></h2>	
+	</div>
+</div>
+
+*/

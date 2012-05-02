@@ -1,0 +1,137 @@
+#specials{
+	
+	height: auto;
+
+	padding-bottom: 0;
+
+	background: #000;
+	@include box-shadow( #000 0 -12px 24px -6px );
+
+	& .bg-image{
+		z-index: 2;
+	}
+	& .sprites{
+		z-index: 1;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		
+		& .wrap{
+			position: relative;
+		}
+		& .money{
+			@include main-sprite;
+			display: block;
+			position: absolute;
+			
+			&.big{
+				z-index: 5;
+				width: 192px;
+				height: 350px;
+				background-position: -800px -290px;
+				right: 200px;
+				top: -400px;
+			}
+			&.med{
+				//display: none;
+				z-index: 4;
+				width: 110px;
+				height: 220px;
+				background-position: -1000px -290px;	
+				right: 40px;
+				top: -100px;
+			}
+			&.small{
+				//display: none;
+				z-index: 3;
+				width: 137px;
+				height: 209px;
+				background-position: -1120px -290px;
+				right: 110px;
+				top: 300px;
+			}
+			&.smaller{
+				//display: none;
+				z-index: 2;
+				width: 94px;
+				height: 163px;
+				background-position: -1270px -290px;
+				right: 320px;
+				top: 300px;
+				
+				&.one{
+					top: 200px;
+					right: 120px;
+				}
+			}
+			&.smallest{
+				z-index: 1;
+				//display: none;
+				width: 94px;
+				height: 158px;
+				background-position: -1370px -290px;
+				right: 220px;
+				top: 300px;
+				
+				&.one{
+					top: 100px;
+					right: 100px;
+				}
+			}
+		}
+	}
+
+	
+	& .section-content{
+		background: $base-blue;
+		@include padding-leader(0.5);
+		@include padding-trailer(0.5);
+		
+
+
+		& h2{
+			@include adjust-font-size-to(74px);
+			@include text-shadow( lighten($base-color, 30% ) 0 -1px 2px );
+			text-transform: uppercase;
+		}
+		
+		& p{
+			@include margin-leader( -0.25 );
+			//@include margin-trailer( 0.25 );
+			display: block;
+			@include raleway;
+			@include adjust-font-size-to( 20px, 1.5 );
+		}
+	}
+	
+	& #specials-wrap{
+		@include padding-leader(1.5);
+		padding-bottom: $height-3d-menu;
+		
+		& .special{
+			width: 50%;
+			@include padding-leader();
+		}
+
+		& .day{
+			@include adjust-font-size-to( 24px );
+			@include text-shadow( lighten($base-color, 0% ) 0 -1px 2px );
+			letter-spacing: 1px;
+			font-weight: normal;
+			color: darken( $base-blue, 15% );
+		}
+		& .name{
+			@include adjust-font-size-to( 34px, 1.75 );
+			letter-spacing: 1px;
+		}
+		& .content{
+			@include padding-leader(0.25);
+			@include raleway;
+			@include adjust-font-size-to( 18px, 1.5 );
+			color: darken( $base-white, 20% );
+		}
+		
+	}
+}

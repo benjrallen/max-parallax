@@ -47,10 +47,10 @@ class NewPostType{
 	
 		add_action( 'admin_head',			array( &$this, 'admin_head' ) );
 		
-		add_action( 'init',						array( &$this, 'register_columns' ), 40 ); //40 is after post types are registered
+		//add_action( 'init',						array( &$this, 'register_columns' ), 40 ); //40 is after post types are registered
 		
 		// manage column output for new types
-		add_action("manage_posts_custom_column",	array( &$this, "column_content" ));
+		//add_action("manage_posts_custom_column",	array( &$this, "column_content" ));
 	}
 	
 	// Output post type icons.
@@ -261,6 +261,9 @@ class MetaBoxTemplate{
 			// get current post meta data
 			$meta = get_post_meta($post->ID, $field['id'], true);
 			
+			if( !isset($field['desc']) )
+				$field['desc'] = '';
+			
 			//echo '<tr>',
 			//		'<th style="width:20%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
 			//		'<td>';
@@ -337,6 +340,9 @@ class MetaBoxTemplate{
 	
 	function save($post_id){
 		global $post;
+				
+		if( !isset($_POST['guru_meta_box_nonce']) )
+			return $post_id;
 		
 		// verify nonce
 		if (!wp_verify_nonce($_POST['guru_meta_box_nonce'], basename(__FILE__))) {
@@ -356,29 +362,31 @@ class MetaBoxTemplate{
 		} elseif (!current_user_can('edit_post', $post_id)) {
 			return $post_id;
 		}
+				
+		if( $this->page == get_post_type() ){
 		
-		foreach ($this->fields as $field) {
-			$old = get_post_meta($post_id, $field['id'], true);
-			$new = $_POST[$field['id']];
-			
-			
-			//this is for the multiple select box
-			if ( is_array($new) ){
-				if ($new[0] == '') {
-					$new = array_slice( $new, 1 );
+			foreach ($this->fields as $field) {
+				$old = get_post_meta($post_id, $field['id'], true);
+				$new = $_POST[$field['id']];
+				
+				
+				//this is for the multiple select box
+				if ( is_array($new) ){
+					if ($new[0] == '') {
+						$new = array_slice( $new, 1 );
+					}
+					
+					$new = implode( ',', $new );
 				}
 				
-				$new = implode( ',', $new );
-			}
-			
-			
-			if ($new && $new != $old) {
-				update_post_meta($post_id, $field['id'], $new);
-			} elseif ('' == $new && $old) {
-				delete_post_meta($post_id, $field['id'], $old);
+				
+				if ($new && $new != $old) {
+					update_post_meta($post_id, $field['id'], $new);
+				} elseif ('' == $new && $old) {
+					delete_post_meta($post_id, $field['id'], $old);
+				}
 			}
 		}
-		
 	}
 	
 	function echo_nonce(){
@@ -475,7 +483,7 @@ class TaxonomyTemplate{
 			'parent_item' => sprintf( __( 'Parent Genre' ), $this->taxonomy_single ),
 			'parent_item_colon' => sprintf( __( 'Parent Genre:' ), $this->taxonomy_single),
 			'edit_item' => sprintf( __( 'Edit %s' ), $this->taxonomy_single ), 
-			'update_item' => sprintf( __( 'Update %s' ), $this->ta_single ),
+			'update_item' => sprintf( __( 'Update %s' ), $this->taxonomy_single ),
 			'add_new_item' => sprintf( __( 'Add New %s' ), $this->taxonomy_single ),
 			'new_item_name' => sprintf( __( 'New %s Name' ), $this->taxonomy_single ),
 			'separate_items_with_commas' => sprintf( __( 'Separate %s with commas' ),strtolower( $this->taxonomy_plural ) ),
@@ -678,6 +686,11 @@ class PostTypeTemplate{
 	}
 	
 	public function update_messages( $messages ){
+		
+		//print_r ( $messages );
+		
+		global $post;
+		$post_ID = $post->ID;
 		
 		$this->messages[ $this->post_type ] = wp_parse_args( $this->messages, array(
 			0 => '', // Unused. Messages start at index 1.

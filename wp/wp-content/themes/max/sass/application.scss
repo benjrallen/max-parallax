@@ -1,0 +1,150 @@
+//fonts
+@font-face {
+	font-family: 'LeagueGothic';
+	src: url('webfonts/League_Gothic-webfont.eot?#iefix') format('embedded-opentype'), 
+	     url('webfonts/League_Gothic-webfont.woff') format('woff'), 
+	     url('webfonts/League_Gothic-webfont.ttf')  format('truetype'),
+	     url('webfonts/League_Gothic-webfont.svg#svgFontName') format('svg');
+}
+
+// Here's where we define some default constants
+@import "partials/base";
+
+//look in base for other variables
+$inner-content-padding: 20px;
+
+body{
+	height:100%;
+	width:100%;
+	min-width: $base-width;
+	display:block;
+	//background: $base-bg url('../images/bg-diag.png');
+	background: $base-color;
+	//background: #bad;
+	//@include open-sans; //font stack
+	@include league-gothic; //font stack
+	color:$base-white;
+
+	//position:relative;	
+	//@include min-height( 2000px );
+}
+
+h1, h2, h3, h4, h5, h6{
+	@include league-gothic;
+}
+
+h1{ @include adjust-font-size-to( 20px ); }
+h2{ @include adjust-font-size-to( 18px ); }
+h3{ @include adjust-font-size-to( 14px ); }
+h4{ @include adjust-font-size-to( 12px ); }
+//h5{ @include adjust-font-size-to( 10px ); }
+//h6{ @include adjust-font-size-to( 8px ); }
+
+
+a{
+	text-decoration:none;
+	color: $base-white;
+	&:hover{ color: $base-pink; }
+	&:visited{
+		color: $base-white;
+	}
+	@include single-transition( all, $base-transition-time, ease-in-out );
+}
+
+b,strong{
+	color: $guru-color;
+	font-weight: 300;	
+}
+
+p{
+	//@include margin-leader(0.5);
+	//@include margin-trailer(0.5);
+	//@include adjust-font-size-to(14px);
+}
+
+input, textarea{
+	
+	&:focus{
+		background: lighten( $base-button-color, 55% );
+	}
+}
+
+
+/* Parts */
+
+$sidebar-width: 180px;
+
+@import "theme/body";
+@import "theme/home-panel";
+@import "theme/fixed_nav";
+@import "theme/events-panel";
+@import "theme/specials-panel";
+@import "theme/menu-panel";
+@import "theme/contact-panel";
+@import "theme/footer";
+
+//@import "theme/header";
+	//@import "theme/banner_bars";
+//@import "theme/top_nav";
+//@import "theme/front_page";
+//@import "theme/sidebar";
+	//@import "theme/rotator";
+	//@import "theme/footer_nav";
+//@import "theme/footer";
+//@import "theme/page_post";
+	//@import "theme/contact_form";
+	//@import "theme/page_contact_us";
+	//@import "theme/photo_gallery";
+
+
+/* End Parts */
+
+
+.wrap{
+	width:$base-width;
+	margin:0 auto;
+}
+
+.line{
+	@include inline-block;
+	vertical-align: middle;
+	width: 1px;
+	margin-left: -1px;
+	height: 100%;
+}
+
+
+.clearfix{
+	@include pie-clearfix;
+}
+.alignleft{
+	@include float-left;
+	margin-right: 1em;
+}
+.alignright{
+	@include float-right;
+	margin-left: 1em;
+}
+.alignnone{}
+.aligncenter{
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+$mobile-menu-height: 4em;
+$mobile-menu-color: #E7E9EF;
+
+/* --- less than main size --- */
+@media screen and (max-width: 979px) {
+}
+
+/* --- iPad Portrait --- */
+@media screen and (max-width: 880px) {
+}
+
+/* --- Smartphones and small Tablet PCs --- */
+@media screen and (max-width : 620px) {
+
+}

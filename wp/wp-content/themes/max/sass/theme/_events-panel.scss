@@ -1,0 +1,166 @@
+$event-left: 550px;
+$event-padd: 18px;
+$event-width: 354px - 2 * $event-padd;
+
+#events{
+	
+	& .page-title{
+		@include adjust-font-size-to( 68px );
+		text-transform: uppercase;
+		margin-left: $event-left;
+		@include padding-leader(0.5);
+		padding-left: $event-padd;
+	}
+	
+	height: 700px;
+	background: #000;
+
+	& .bg-image{
+		z-index: 2;
+		
+		//@include single-transition( all, 0.2s );
+		//background: url('../images/texture-white-60.jpg') no-repeat center 0;
+		background: url('../images/texture-white-60.jpg') repeat-x center 0;
+		
+		@include opacity( 0.15 );
+
+	}
+	& .sprites{
+		z-index: 1;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		
+		& .wrap{
+			position: relative;
+		}
+		& .game{
+			@include main-sprite;
+			display: block;
+			position: absolute;
+			
+			&.big{
+				width: 319px;
+				height: 596px;
+				background-position: 0 -290px;
+				z-index: 3;
+				left: 100px;
+				top: -400px;
+			}
+			&.med{
+				width: 246px;
+				height: 379px;
+				background-position: -350px -290px;	
+				z-index: 2;
+				left: -50px;
+				top: -100px;
+			}
+			&.small{
+				width: 188px;
+				height: 289px;
+				background-position: -600px -290px;
+				z-index: 1;
+				left: 300px;
+				top: 300px;
+			}
+		}
+	}
+	
+	& article[data-type="sprite"]{
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		//top: -190px;
+		top: 0;
+		left: 0;
+	}
+	
+	& #events-car-wrap{
+		width: 100%;
+		position: relative;
+	}
+	
+	& #events-car{
+		width: 9999em;
+		position: absolute;
+		top: 0;
+		left: 0;
+		@include single-transition( left, 0.33s, easeOutQuad );
+		
+		& .event-wrap{
+			width: $base-width;
+			@include float-left;
+
+			& .event{
+				width: $event-width;
+				padding-left: $event-padd;
+				padding-right: $event-padd;
+				position: relative;
+				
+				@include adjust-font-size-to( 18px );
+				letter-spacing: 1px;
+				
+				margin-left: $event-left;
+				background: rgba( 0,0,0,0.2 );
+								
+				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#33000000,endColorstr=#33000000)"; /* IE8 */
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#33000000,endColorstr=#33000000);   /* IE6 & 7 */
+				zoom: 1;
+				
+				& .event-title{
+					color: $base-gold;
+					@include padding-leader( 0.25 );
+					@include padding-trailer( 0.25 );
+					@include adjust-font-size-to( 38px, 1.75 );
+				}
+				
+				& .meta{
+					@include adjust-font-size-to( 16px, 1.25 );
+					& .date{
+					
+					}
+					& .time{
+						
+					}
+				}
+				
+				& .content{
+					@include adjust-font-size-to( 12px, 1 );
+					@include padding-leader( 0.75 );
+					
+					& p{
+						@include padding-trailer( 0.75 );
+					}
+				}
+				
+				& .nav{
+					width: 100%;
+					bottom: -2em;
+					position: absolute;
+					left: 0;
+					@include adjust-font-size-to( 9px );
+					
+					& a{
+						color: $base-gold;
+						cursor: pointer;
+						cursor: hand;
+						
+						&:hover{
+							text-decoration: underline;
+						}
+						
+						&.next{
+							@include float-right;
+						}
+						&.prev{
+							@include float-left;
+						}
+					}					
+				}
+			}
+		}
+	}
+		
+}
