@@ -94,7 +94,7 @@ $logo-top: 100px;
 	
 	
 	& .bg-image{
-		background: url('../images/texture-60.jpg') no-repeat center 0;
+		background: url('../images/texture-60.jpg') repeat center 0;
 		
 		@include opacity( 0.15 );
 	}

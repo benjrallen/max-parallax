@@ -45,6 +45,10 @@
 
 		<script type="text/javascript">
 			Modernizr.load([
+				{ test: Modernizr.fontface,
+				  yep: 'http://use.typekit.com/sgz5bri.js',
+				  callback: function(){ try{Typekit.load();}catch(e){} }
+				},
 				{ load : ['//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'],
 				    complete: function () { if ( !window.jQuery ){ Modernizr.load(Guru.TemplateUrl+'/js/jquery.js'); } }
 				},

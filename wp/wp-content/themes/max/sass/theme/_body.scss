@@ -22,7 +22,7 @@ section.feature{
 		z-index: 1;
 		
 		//@include single-transition( all, 0.2s );
-		background: url('../images/texture-60.jpg') no-repeat center 0;
+		background: url('../images/texture-60.jpg') repeat center 0;
 		//background: url('../images/texture-60.jpg') repeat-x center 0;
 		
 		@include opacity( 0.15 );
